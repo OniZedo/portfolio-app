@@ -1,20 +1,27 @@
 import React from "react";
 import postData from '../Components/CreateCrud.js';
 import getFetch from '../Components/getFetch.js';
+import Carousel from 'react-bootstrap/Carousel';
+import Card from 'react-bootstrap/Card';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import Form from 'react-bootstrap/Form';
 
 export default class Portfolio extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showComponent: false,
-            fetchData: []
+            fetchData: [],
+            userName: '',
+            name: ''
         };
       }
 
     postAndFetch() {
         const data = { 
-            username: 'example ' + Math.random(0, 10000), 
-            name: 'Test'
+            username: this.state.userName, 
+            name: this.state.name
         };
         postData(data)
         .then((data) => {
@@ -65,6 +72,25 @@ export default class Portfolio extends React.Component {
         return (
             <div>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <InputGroup className="mb-3">
+                                <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                                <FormControl
+                                    placeholder="Username"
+                                    aria-label="Username"
+                                    aria-describedby="basic-addon1"
+                                    onChange={(e) => this.setState({userName: e.target.value})}
+                                />
+                            </InputGroup>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text id="basic-addon3">
+                                    https://example.com/users/
+                                </InputGroup.Text>
+                                <FormControl 
+                                    id="basic-url" 
+                                    aria-describedby="basic-addon3"
+                                    onChange={(e) => this.setState({name: e.target.value})}
+                                    />
+                            </InputGroup>
                     <button onClick={() => this.postAndFetch()}> Post DATA </button>
                     <button onClick={() => this.deleteData()}> Delete DATA </button>
                     <p>
